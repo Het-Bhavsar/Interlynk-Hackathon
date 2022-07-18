@@ -9,14 +9,12 @@ import {
 import Swiper from "react-native-swiper";
 import { Button } from "@rneui/themed";
 import { Dimensions } from 'react-native';
-function SwiperComponent() {
+import { useNavigation } from '@react-navigation/native';
+function SwiperComponent(props) {
 const [loading,setLoading]=useState(false)
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-  const print = () => {
-    setLoading(true);
-    console.log("button is mess");
-  };
+const navigation = useNavigation();
   return (
     <View style={styles.root}>
       <Swiper
@@ -77,7 +75,8 @@ const windowHeight = Dimensions.get('window').height;
                 position:"absolute",
                 marginTop:600
               }}
-              onPress={() => print()}
+              onPress={(props) => { setLoading(true);
+                navigation.navigate("Login");}}
               
               />
            
