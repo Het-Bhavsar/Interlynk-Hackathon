@@ -4,7 +4,9 @@ import {
   View,
   Platform,
   Alert,
-  PermissionsAndroid
+  Text,
+  PermissionsAndroid,
+
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
@@ -145,7 +147,11 @@ export default class Maps extends Component {
             showsUserLocation
             loadingEnabled
             userLocationAnnotationTitle="You"
-          ></MapView>
+          >
+            
+          </MapView>
+          
+    
         </View>
       </View>
     );
@@ -434,6 +440,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     marginTop: Platform.OS == "ios" ? 20 : 0,
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    backgroundColor: 'red',
+    opacity: 0.3,
   },
   item: {
     flexDirection: "column",

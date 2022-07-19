@@ -1,7 +1,7 @@
 // srс/screens/HomeScreen.js
 
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet,ImageBackground} from 'react-native';
 import BLEfunction from "../../components/BLEfunction";
 import Maps from "../../components/Maps"
 const HomeScreen = (props) => {
@@ -22,5 +22,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginTop: Platform.OS == "ios" ? 20 : 0,
   },
+ 
 });
 export default HomeScreen;
