@@ -2,21 +2,26 @@
 
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import SwiperComponent from "../../components/Swiper";
-const HomeScreen = () => {
+import BLEfunction from "../../components/BLEfunction";
+import Maps from "../../components/Maps"
+const HomeScreen = (props) => {
+  const {key,logout,wallet}=props;
+  
+  console.log(props)
   return (
-    <View style={styles.root}>
-      <Text>Hey boy this is Home screen</Text>
-    </View>
+    <View style={styles.container}>
+    <Maps />
+    {/* <BLEfunction /> */}
+  </View>
   );
 };
 
+
 const styles = StyleSheet.create({
-  root: {
+  container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "white",
+    marginTop: Platform.OS == "ios" ? 20 : 0,
   },
 });
-
 export default HomeScreen;
