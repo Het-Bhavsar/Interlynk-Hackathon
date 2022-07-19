@@ -7,11 +7,10 @@ import Maps from "../../components/Maps"
 const HomeScreen = (props) => {
   const {key,logout,wallet}=props;
   
-  console.log(props)
   return (
     <View style={styles.container}>
     <Maps />
-    {/* <BLEfunction /> */}
+    <BLEfunction />
   </View>
   );
 };
