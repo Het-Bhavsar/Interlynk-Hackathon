@@ -1,4 +1,4 @@
-package Interlynk.mvp;
+package com.Interlynk;
 
 import android.os.Build;
 import android.os.Bundle;

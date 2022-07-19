@@ -1,4 +1,4 @@
-package Interlynk.mvp.newarchitecture;
+package com.Interlynk.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import Interlynk.mvp.BuildConfig;
-import Interlynk.mvp.newarchitecture.components.MainComponentsRegistry;
-import Interlynk.mvp.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.Interlynk.BuildConfig;
+import com.Interlynk.newarchitecture.components.MainComponentsRegistry;
+import com.Interlynk.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
