@@ -1,9 +1,9 @@
 import { Wallet } from '@ethersproject/wallet';
 import Web3Auth, { OPENLOGIN_NETWORK } from '@web3auth/react-native-sdk';
-import { Buffer } from 'buffer';
+import { Buffer } from 'buffer';  
 import Constants, { AppOwnership } from 'expo-constants';
 import * as Linking from 'expo-linking';
-import * as WebBrowser from 'expo-web-browser';
+import * as WebBrowser from '@toruslabs/react-native-web-browser';
 import jwtDecode from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View ,ImageBackground,Image} from 'react-native';
@@ -12,12 +12,12 @@ import { Dimensions } from "react-native"
 import { Button } from "@rneui/themed";
 global.Buffer = global.Buffer || Buffer;
 
-const scheme = 'interlynk'; // Or your desired app redirection scheme
+const scheme = 'interlynk.mvp'; // Or your desired app redirection scheme
 
 const resolvedRedirectUrl =
   Constants.appOwnership == AppOwnership.Expo || Constants.appOwnership == AppOwnership.Guest
-    ? Linking.createURL('interlynk', {})
-    : Linking.createURL('interlynk', { scheme: scheme });
+    ? Linking.createURL('interlynk.mvp', {})
+    : Linking.createURL('interlynk.mvp', { scheme: scheme });
 
 const Login = ({ onClose }) => {
 const navigation = useNavigation();
@@ -31,7 +31,7 @@ const windowHeight = Dimensions.get("window").height;
   const [wallet, setWallet] = useState(null);
 
   useEffect(() => {
-    web3auth = new Web3Auth(WebBrowser, {
+    web3authManager = new Web3Auth(WebBrowser, {
       clientId: 'BI63yeUDhfNOieEldzDkpBnefYTzDKQz52RHFM30hEakeuj18ljStjdMm_V1AQaGSdWoz-S3qMKVgUpiKkz49WE',
       network: OPENLOGIN_NETWORK.TESTNET, // or other networks
   
@@ -67,7 +67,7 @@ const windowHeight = Dimensions.get("window").height;
   const handleLogin = async () => {
     resetState();
     try {
-      const state = await web3auth.login({
+      const state = await web3authManager.login({
         redirectUrl: resolvedRedirectUrl,
       });
       console.log(state);
@@ -91,7 +91,7 @@ const windowHeight = Dimensions.get("window").height;
 
   const handleLogout = async () => {
     try {
-      await web3auth.logout({
+      await web3authManager.logout({
         redirectUrl: resolvedRedirectUrl,
       });
       resetState();

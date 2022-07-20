@@ -6,7 +6,7 @@ import {
   Alert,
   Text,
   PermissionsAndroid,
-
+  Image
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
@@ -153,6 +153,7 @@ export default class Maps extends Component {
           
     
         </View>
+       
       </View>
     );
   }

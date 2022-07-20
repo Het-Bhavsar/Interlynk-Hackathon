@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Interlynk-App",
-    "slug": "Interlynk-App",
+    "name": "interlynk",
+    "slug": "interlynk",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

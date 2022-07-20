@@ -1,7 +1,7 @@
 // srс/screens/HomeScreen.js
 
 import React from 'react';
-import {View, Text, StyleSheet,ImageBackground} from 'react-native';
+import {View,Image, Text, StyleSheet,ImageBackground} from 'react-native';
 import BLEfunction from "../../components/BLEfunction";
 import Maps from "../../components/Maps"
 const HomeScreen = (props) => {
@@ -10,6 +10,12 @@ const HomeScreen = (props) => {
   return (
     <View style={styles.container}>
     <Maps />
+    {/* <Image
+        source={require('../../assets/Imgaes/gradient.png')} 
+        style={{ width: '100%', height: 150,  flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: 36 }}
+    /> */}
     <BLEfunction />
   </View>
   );

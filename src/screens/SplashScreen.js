@@ -26,8 +26,8 @@ const SplashScreen = (props) => {
       props.navigation.navigate("Home");
     }
     if (swiperTest) {
-      // props.navigation.navigate("Swiper");
-      props.navigation.navigate("Home");
+      props.navigation.navigate("Swiper");
+      // props.navigation.navigate("Home");
     }
   }, [authLoaded, props.navigation,swiperTest]);
 
