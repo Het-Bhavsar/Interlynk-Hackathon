@@ -1,8 +1,8 @@
 async function main() {
-    const Interlynk = await ethers.getContractFactory("Interlynk");
+    const interlynk = await ethers.getContractFactory("interlynk");
  
     // Start deployment, returning a promise that resolves to a contract object
-    const inter_lynk = await Interlynk.deploy();   
+    const inter_lynk = await interlynk.deploy();   
     console.log("Contract deployed to address:", inter_lynk.address);
  }
  

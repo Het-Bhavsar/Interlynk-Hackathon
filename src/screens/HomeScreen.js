@@ -5,6 +5,7 @@ import {View,Image, Text, StyleSheet,ImageBackground} from 'react-native';
 import BLEfunction from "../../components/BLEfunction";
 import Maps from "../../components/Maps"
 const HomeScreen = (props) => {
+  console.log(props);
   const {key,logout,wallet}=props;
   
   return (

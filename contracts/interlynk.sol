@@ -6,8 +6,8 @@ import "../node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Burn
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
 
-contract Interlynk is ERC20, ERC20Burnable, Ownable {
-    constructor() ERC20("Interlynk", "ILK") {
+contract interlynk is ERC20, ERC20Burnable, Ownable {
+    constructor() ERC20("interlynk", "ILK") {
         _mint(msg.sender, 10000000 );
     }
 

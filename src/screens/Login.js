@@ -12,12 +12,12 @@ import { Dimensions } from "react-native"
 import { Button } from "@rneui/themed";
 global.Buffer = global.Buffer || Buffer;
 
-const scheme = 'interlynk.mvp'; // Or your desired app redirection scheme
+const scheme = 'web3authexposample'; // Or your desired app redirection scheme
 
 const resolvedRedirectUrl =
   Constants.appOwnership == AppOwnership.Expo || Constants.appOwnership == AppOwnership.Guest
-    ? Linking.createURL('interlynk.mvp', {})
-    : Linking.createURL('interlynk.mvp', { scheme: scheme });
+    ? Linking.createURL('web3auth', {})
+    : Linking.createURL('web3auth', { scheme: scheme });
 
 const Login = ({ onClose }) => {
 const navigation = useNavigation();
@@ -32,7 +32,7 @@ const windowHeight = Dimensions.get("window").height;
 
   useEffect(() => {
     web3authManager = new Web3Auth(WebBrowser, {
-      clientId: 'BI63yeUDhfNOieEldzDkpBnefYTzDKQz52RHFM30hEakeuj18ljStjdMm_V1AQaGSdWoz-S3qMKVgUpiKkz49WE',
+      clientId: 'BG82--cbUfsRCGM9Tb3ywZaY-U4YX8CYwtoi7uPq99J2zbAS_Efuixiwzqnmht4mLbn_Wg4IJMPQ9sxaq2DtIE4',
       network: OPENLOGIN_NETWORK.TESTNET, // or other networks
   
       whiteLabel: {
@@ -70,16 +70,16 @@ const windowHeight = Dimensions.get("window").height;
       const state = await web3authManager.login({
         redirectUrl: resolvedRedirectUrl,
       });
-      console.log(state);
+      // console.log(state);
       let privateKey = state.privKey || '';
-      const wallet = new Wallet(privateKey);
+      const walletInfo = new Wallet(privateKey);
       setKey(privateKey || 'no key');
-      setWallet(wallet);
+      setWallet(walletInfo);
 
       setIdToken((state.userInfo )?.idToken);
       navigation.navigate("Home",{
         key:key,
-        wallet:wallet,
+        wallet:walletInfo,
         logout:handleLogout
       });
       

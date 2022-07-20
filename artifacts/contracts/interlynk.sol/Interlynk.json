@@ -1,6 +1,6 @@
 {
   "_format": "hh-sol-artifact-1",
-  "contractName": "Interlynk",
+  "contractName": "interlynk",
   "sourceName": "contracts/interlynk.sol",
   "abi": [
     {
