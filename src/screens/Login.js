@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from "react-native"
 import { Button } from "@rneui/themed";
 global.Buffer = global.Buffer || Buffer;
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const scheme = 'web3authexposample'; // Or your desired app redirection scheme
 
 const resolvedRedirectUrl =
@@ -77,6 +77,13 @@ const windowHeight = Dimensions.get("window").height;
       setWallet(walletInfo);
 
       setIdToken((state.userInfo )?.idToken);
+      value={
+        key:key,
+        wallet:walletInfo,
+        userInfo:state
+      }
+      const jsonValue = JSON.stringify(value)
+      await AsyncStorage.setItem('@storage_Key', jsonValue)
       navigation.navigate("Home",{
         key:key,
         wallet:walletInfo,
@@ -126,20 +133,7 @@ const windowHeight = Dimensions.get("window").height;
           }}
           onPress={handleLogin}
         />
-        <Button
-          title={"Connect web3 wallet"}
-          buttonStyle={{
-            backgroundColor: "#000000",
-            borderRadius: 5,
-          }}
-          containerStyle={{
-            width: 200,
-            marginHorizontal: windowWidth / 4,
-            position: "absolute",
-            marginTop: windowHeight-300,
-          }}
-          onPress={null}
-        />
+      
       {/* {!key && <Button label="Login with Web3Auth" onPress={handleLogin} />} */}
       {/* {!!key && <Button label="Logout" onPress={handleLogout} />} */}
       {/* <Button label="Back" onPress={onClose} /> */}

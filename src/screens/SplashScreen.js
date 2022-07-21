@@ -7,14 +7,22 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const SplashScreen = (props) => {
   const [authLoaded, setAuthLoaded] = useState(false);
   const [swiperTest, setSwiperTest] = useState(false);
   useEffect(() => {
-    setTimeout(() => {
-      // setAuthLoaded(true);
+    setTimeout(async() => {
+      
+    const value = await AsyncStorage.getItem('@storage_Key')
+    if(value !== null) {
+      // value previously stored
+      setAuthLoaded(true);
+    }else{
       setSwiperTest(true);
+    }
+
+
       
       
     }, 2000);
