@@ -75,7 +75,7 @@ const windowHeight = Dimensions.get("window").height;
       const walletInfo = new Wallet(privateKey);
       setKey(privateKey || 'no key');
       setWallet(walletInfo);
-
+      
       setIdToken((state.userInfo )?.idToken);
       value={
         key:key,

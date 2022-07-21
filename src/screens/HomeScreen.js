@@ -1,13 +1,26 @@
 // srс/screens/HomeScreen.js
 
-import React from 'react';
+import React,{useState} from 'react';
+import { Wallet } from '@ethersproject/wallet';
 import {View,Image, Text, StyleSheet,ImageBackground} from 'react-native';
 import BLEfunction from "../../components/BLEfunction";
-import Maps from "../../components/Maps"
+import Maps from "../../components/Maps";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const HomeScreen = (props) => {
-  console.log(props);
   const {key,logout,wallet}=props;
-  
+  const [storageData,setStorageData]=useState();
+  const getData=async()=>{
+    const value = await AsyncStorage.getItem('@storage_Key')
+    if(value !== null) {
+      let data = JSON.parse(value);
+      // Wallet.connect(data.wallet.address);
+      setStorageData(data);
+      
+    }
+
+  }
+  getData();
   return (
     <View style={styles.container}>
     <Maps />
