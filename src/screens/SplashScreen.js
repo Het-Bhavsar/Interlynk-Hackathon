@@ -18,6 +18,7 @@ const SplashScreen = (props) => {
     if(value !== null) {
       // value previously stored
       setAuthLoaded(true);
+
     }else{
       setSwiperTest(true);
     }

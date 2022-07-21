@@ -13,6 +13,8 @@ import {
 } from "react-native";
 import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import { BleManager } from "react-native-ble-plx";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
 
 const BluetoothManager = new BleManager();
 const log = (msg, level = "log") => {
@@ -37,6 +39,7 @@ export default class BLEfunction extends Component {
       data: [],
       bluetoothState: "PoweredOff",
       bluetoothBuferData: [],
+      storageData:""
     };
     this.deviceMap = new Map();
     this.controls = {
@@ -75,8 +78,17 @@ export default class BLEfunction extends Component {
         this.scan();
       }
     }, true /*=emitCurrentState*/);
+    
+     this.getData();
   }
+  getData=async()=>{
+    const value = await AsyncStorage.getItem('@storage_Key')
+    if(value !== null) {
+      let data = JSON.parse(value);
+      this.setState({storageData:data})
+    }
 
+  }
   // enables the bluettoth
   enableBluettoth() {
     BluetoothStateManager.enable().then((result) => {
@@ -154,6 +166,18 @@ export default class BLEfunction extends Component {
         log('-----------------something-------------')
         log(something);
         log(`next device connection ${index}`);
+        if(something){
+          axios({
+            method: "post",
+            url: "https://interlynk.herokuapp.com/BLEdata",
+            data: {
+              bleData:something,
+              walletAddres:this.state.storageData&&this.state.storageData.wallet.address
+            },
+          }).then((response) => {
+            console.log("data has been sent");
+          });
+        }
       }
       
     }

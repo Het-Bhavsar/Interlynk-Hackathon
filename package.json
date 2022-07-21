@@ -23,6 +23,7 @@
     "@rneui/themed": "^0.0.0-edge.2",
     "@toruslabs/react-native-web-browser": "^0.2.0",
     "@web3auth/react-native-sdk": "^3.0.1",
+    "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "expo": "~45.0.0",
     "expo-constants": "^13.1.1",

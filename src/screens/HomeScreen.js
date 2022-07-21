@@ -14,7 +14,6 @@ const HomeScreen = (props) => {
     const value = await AsyncStorage.getItem('@storage_Key')
     if(value !== null) {
       let data = JSON.parse(value);
-      // Wallet.connect(data.wallet.address);
       setStorageData(data);
       
     }
