@@ -13,6 +13,11 @@ import { Button } from "@rneui/themed";
 import axios from "axios";
 global.Buffer = global.Buffer || Buffer;
 import AsyncStorage from "@react-native-async-storage/async-storage";
+// Import the required shims
+import "@ethersproject/shims";
+
+// Import the ethers library
+import { ethers } from 'ethers';
 const scheme = "web3authexposample"; // Or your desired app redirection scheme
 
 const resolvedRedirectUrl =
@@ -62,24 +67,74 @@ const Login = ({ onClose }) => {
     setIdToken("");
     setTokenData(null);
   };
-
-  const handleLogin = async () => {
+  const handleCreateCustomeWallet=async()=>{
     resetState();
+
+    try{
+    const wallet = await ethers.Wallet.createRandom(provider=process.env.API_URL);  
+      const customeWalletInfo = {
+        key:wallet.privateKey,
+        address:wallet.address,
+        mnemonic:wallet._mnemonic().phrase
+    }
+      console.log(customeWalletInfo);
+      setKey(wallet.privateKey || "no key");
+      setWallet(customeWalletInfo);
+      value = {
+        key: key,
+        wallet: customeWalletInfo,
+        loginMethod: "customeWallet"
+        
+
+      };
+      axios({
+        method: "post",
+        url: "https://interlynk.herokuapp.com/user",
+        data: {
+          key: customeWalletInfo.key,
+          wallet: customeWalletInfo,
+          walletAddres: customeWalletInfo.walletAddres,
+          loginMethod: "customeWallet",
+          data: [],
+        },
+      }).then((response) => {
+        console.log("user created");
+      });
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("@storage_Key", jsonValue);
+      navigation.navigate("Home", {
+        key: key,
+        wallet: customeWalletInfo,
+        loginMethod: "web3auth"
+      });}catch (error) {
+        console.error(error);
+        setErrorMsg(String(error));
+      }
+        
+  }
+  const handleWeb3authLogin = async () => {
+    resetState();
+
     try {
+   
+        console.log("login through web3auth")
       const state = await web3authManager.login({
         redirectUrl: resolvedRedirectUrl,
       });
+    
       // console.log(state);
       let privateKey = state.privKey || "";
-      const walletInfo = new Wallet(privateKey);
+      const walletInfo = new Wallet(privateKey,provider=process.env.API_URL);
       setKey(privateKey || "no key");
       setWallet(walletInfo);
-
+      console.log(walletInfo);
       setIdToken(state.userInfo?.idToken);
       value = {
         key: key,
         wallet: walletInfo,
         userInfo: state,
+        loginMethod: "web3auth"
+
       };
       axios({
         method: "post",
@@ -89,6 +144,7 @@ const Login = ({ onClose }) => {
           wallet: walletInfo,
           walletAddres: walletInfo.walletAddres,
           userInfo: state,
+          loginMethod: "web3auth",
           data: [],
         },
       }).then((response) => {
@@ -99,12 +155,17 @@ const Login = ({ onClose }) => {
       navigation.navigate("Home", {
         key: key,
         wallet: walletInfo,
-        logout: handleLogout,
+        loginMethod: "web3auth"
       });
-    } catch (error) {
-      console.error(error);
-      setErrorMsg(String(error));
-    }
+    
+   
+  
+  } catch (error) {
+    console.error(error);
+    setErrorMsg(String(error));
+  }
+    
+    
   };
 
   const handleLogout = async () => {
@@ -131,7 +192,7 @@ const Login = ({ onClose }) => {
           style={styles.logo}
         />
         <Button
-          title={"Login/Create account"}
+          title={"Login with web3auth"}
           buttonStyle={{
             backgroundColor: "#000000",
             borderRadius: 5,
@@ -142,7 +203,21 @@ const Login = ({ onClose }) => {
             position: "absolute",
             marginTop: windowHeight - 350,
           }}
-          onPress={handleLogin}
+          onPress={handleWeb3authLogin}
+        />
+        <Button
+          title={"Login/Create wallet"}
+          buttonStyle={{
+            backgroundColor: "#000000",
+            borderRadius: 5,
+          }}
+          containerStyle={{
+            width: 200,
+            marginHorizontal: windowWidth / 4,
+            position: "absolute",
+            marginTop: windowHeight - 300,
+          }}
+          onPress={handleCreateCustomeWallet}
         />
 
         {/* {!key && <Button label="Login with Web3Auth" onPress={handleLogin} />} */}
