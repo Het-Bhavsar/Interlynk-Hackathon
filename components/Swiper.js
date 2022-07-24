@@ -10,6 +10,9 @@ import Swiper from "react-native-swiper";
 import { Button } from "@rneui/themed";
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Swipe1 from "../components/Swipe-1";
+import Swipe2 from "../components/Swipe-2";
+import Swipe3 from "../components/Swipe-3";
 function SwiperComponent(props) {
 const [loading,setLoading]=useState(false)
 const windowWidth = Dimensions.get('window').width;
@@ -33,7 +36,6 @@ const navigation = useNavigation();
           width: 15,
           height: 7,
           borderRadius: 5,
-          backgroundColor: "transparent",
           borderColor: "#EEEADE",
           borderWidth: 1,
           marginRight: 10,
@@ -46,19 +48,14 @@ const navigation = useNavigation();
         }}
       >
         <View style={styles.slide1}>
-          <Image
-            source={require("../assets/Imgaes/swipe-1.png")}
-            style={styles.backgroundImage}
-          />
+          <Swipe1/>
         </View>
         <View style={styles.slide2}>
-          <Image
-            source={require("../assets/Imgaes/swipe-2.png")}
-            style={styles.backgroundImage}
-          />
+          <Swipe2/>
         </View>
         <View style={styles.slide3}>
-          <ImageBackground
+          <Swipe3/>
+          {/* <ImageBackground
             source={require("../assets/Imgaes/swipe-3.png")}
             style={styles.slide3Image}
           >
@@ -80,7 +77,7 @@ const navigation = useNavigation();
               
               />
            
-          </ImageBackground>
+          </ImageBackground> */}
         </View>
       </Swiper>
     </View>
@@ -112,12 +109,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#97CAE5",
   },
   slide3: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#92BBD9",
     alignItems:'center',
     justifyContent:'center'
   },

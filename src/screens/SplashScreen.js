@@ -17,7 +17,9 @@ const SplashScreen = (props) => {
     const value = await AsyncStorage.getItem('@storage_Key')
     if(value !== null) {
       // value previously stored
-      setAuthLoaded(true);
+      // setAuthLoaded(true);
+      setSwiperTest(true);
+
 
     }else{
       setSwiperTest(true);
@@ -41,7 +43,7 @@ const SplashScreen = (props) => {
   }, [authLoaded, props.navigation,swiperTest]);
 
   return (
-    <SafeAreaView style={styles.root}>
+    <SafeAreaView style={styles.container}>
       <StatusBar
         animated={true}
         backgroundColor="#ECF0F1"
@@ -49,25 +51,25 @@ const SplashScreen = (props) => {
       />
 
       <Image
-        source={require("../../assets/Imgaes/splashScreen.png")}
-        style={styles.backgroundImage}
+        source={require("../../assets/Imgaes/transparentLogo.png")}
+        resizeMode="contain"
+        style={styles.image}
       />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  root: {
+  container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ECF0F1",
+    backgroundColor:"white"
   },
-  backgroundImage: {
-    flex: 1,
-    alignSelf: "stretch",
-    width: null,
-  },
+  image: {
+    width: 343,
+    height: 354,
+    alignSelf: "center"
+  }
 });
 
 export default SplashScreen;
