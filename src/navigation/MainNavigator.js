@@ -6,6 +6,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/HomeScreen";
 import SplashScreen from "../screens/SplashScreen";
 import SwiperComponent from "../../components/Swiper";
+import Setting from "../../components/Setting";
+import Maps from "../../components/Maps";
 const Stack = createStackNavigator();
 
 const MainNavigator = () => {
@@ -26,6 +28,14 @@ const MainNavigator = () => {
           name="Home"
           options={{ animationEnabled: true, header: () => null }}
           component={HomeScreen}
+        /><Stack.Screen
+          name="Setting"
+          options={{ animationEnabled: true, header: () => null }}
+          component={Setting}
+        /><Stack.Screen
+          name="Map"
+          options={{ animationEnabled: true, header: () => null }}
+          component={Maps}
         />
       </Stack.Navigator>
     </NavigationContainer>

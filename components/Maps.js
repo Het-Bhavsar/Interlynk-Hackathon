@@ -6,14 +6,20 @@ import {
   Alert,
   Text,
   PermissionsAndroid,
-  Image
+  TouchableOpacity
 } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker,OverlayComponent } from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
+import { Icon } from "@rneui/themed";
+import { Dimensions } from 'react-native';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 //Make sure that there is only one instance of BleManager globally, and the BleModule class holds Bluetooth connection information
 
+
 export default class Maps extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +31,6 @@ export default class Maps extends Component {
       gotLocation: false,
     };
   }
-
   componentDidMount() {
     this.getUserLocation();
   }
@@ -129,10 +134,12 @@ export default class Maps extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View pointerEvents="none">
+        
+        <View >
           <MapView
             ref={(ref) => (this.map = ref)}
             style={styles.map}
+            showsMyLocationButton={false}
             initialRegion={{
               latitude: 21.237702,
               longitude: 72.789032,
@@ -147,13 +154,14 @@ export default class Maps extends Component {
             showsUserLocation
             loadingEnabled
             userLocationAnnotationTitle="You"
-          >
+          />
             
-          </MapView>
-          
+            <TouchableOpacity style={styles.overlay} onPress={()=>{this.props.navigation.navigate("Setting")}} >
+        
+        <Icon name="align-justify" type="font-awesome"   size={25} color="white"  />
+      </TouchableOpacity>
     
         </View>
-       
       </View>
     );
   }
@@ -468,10 +476,23 @@ const mapStyle =[
   }
 ]
 const styles = StyleSheet.create({
+  overlay: {
+    position: 'absolute',
+    top:15,
+    bottom: 0,
+    left:15,
+    backgroundColor: 'rgba(255, 255, 255, 0)',
+  },
   container: {
     flex: 1,
     backgroundColor: "white",
     marginTop: Platform.OS == "ios" ? 20 : 0,
+  },
+  icon: {
+    
+    position: 'absolute',
+   
+  
   },
   backgroundImage: {
     flex: 1,

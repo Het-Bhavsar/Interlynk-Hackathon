@@ -11,7 +11,7 @@ import { Dimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
   const [storageData,setStorageData]=useState();
   const [walletBalance, setWalletBallence] = useState(0.00);
 
@@ -54,13 +54,13 @@ const HomeScreen = () => {
         barStyle={"dark"}
       />
       <View style={styles.map}>
-    <Maps />
+    <Maps navigation={props.navigation}/>
     </View>
     <View style={styles.balanceContainer}>
       <Text style={styles.balanceText}>Your Balance</Text>
       <Text style={styles.balance}>{walletBalance} INT</Text>
     </View>
-    <BLEfunctionMVP />
+    {/* <BLEfunctionMVP /> */}
     
   </View>
   );
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,1)",
     borderWidth: 1,
     borderColor: "#000000",
-    borderRadius: 27,
+    borderRadius: 25,
     width: windowWidth,
     height: windowHeight
   },
