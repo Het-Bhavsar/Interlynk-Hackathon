@@ -33,23 +33,20 @@ export default class BLEfunctionMVP extends Component {
     this.deviceMap = new Map();
     
     this.controls = {
-      scanningTime: 5000 * 60,
+      scanningTime: 300000,
     };
   }
   async stopScan() {
     log("device scan stoped");
     this.setState({ scaning: false });
     await BluetoothManager.stopDeviceScan();
-    let amount = this.state.data.length/10;
-    console.log(amount);
-    await mintTheToken(this.state.walletAddress,amount);
-    this.setState({data:[]});
-    this.scan();
+    
   }
   async scan() {
+    console.log("inside scanning function", this.state.scaning)
     if (!this.state.scaning) {
       this.deviceMap.clear();
-
+        log("going to scan")
       BluetoothManager.startDeviceScan(null, null, (error, device) => {
         this.setState({ scaning: true });
 
@@ -104,6 +101,7 @@ export default class BLEfunctionMVP extends Component {
 
   componentDidMount() {
     // monitors blutooth state, and gives promote on off state.
+    console.log("hello from ble functions")
     this.onStateChangeListener = BluetoothManager.onStateChange((state) => {
       this.setState({ bluetoothState: state });
       if (state === "PoweredOff") {
@@ -121,6 +119,17 @@ export default class BLEfunctionMVP extends Component {
       }
     }, true /*=emitCurrentState*/);
     this.getData();
+    setInterval(async() => {
+        let amount = this.state.data.length/10;
+        console.log(amount);
+        await mintTheToken(this.state.walletAddress,amount);
+        this.setState({data:[]});
+        this.scan(); 
+    }, 360000);
+  }
+  
+  componentWillUnmount() {
+    BluetoothManager.destroy();
   }
   render() {
     return null;
