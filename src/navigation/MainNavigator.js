@@ -5,7 +5,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import HomeScreen from "../screens/HomeScreen";
 import SplashScreen from "../screens/SplashScreen";
-import Login from "../screens/Login";
 import SwiperComponent from "../../components/Swiper";
 const Stack = createStackNavigator();
 
@@ -22,10 +21,6 @@ const MainNavigator = () => {
           name="Swiper"
           options={{ animationEnabled: true, header: () => null }}
           component={SwiperComponent}
-        /><Stack.Screen
-          name="Login"
-          options={{ animationEnabled: true, header: () => null }}
-          component={Login}
         />
         <Stack.Screen
           name="Home"

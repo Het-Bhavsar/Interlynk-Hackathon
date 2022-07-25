@@ -18,7 +18,8 @@ import "@ethersproject/shims";
 
 // Import the ethers library
 import { ethers } from 'ethers';
-
+import {API_URL} from '@env';
+import { ActivityIndicator } from "react-native";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const scheme = "web3authexposample"; // Or your desired app redirection scheme
@@ -49,7 +50,7 @@ const resolvedRedirectUrl =
   const [_, setTokenData] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [loading,setLoading] = useState(false);
-
+  // console.log(API_URL);
   useEffect(() => {
     console.log()
     if (idToken) {
@@ -64,14 +65,14 @@ const resolvedRedirectUrl =
     setIdToken("");
     setTokenData(null);
   };
-let provider = process.env.API_URL;
 
-  console.log(provider);
+
+  // console.log(API_URL);
   const handleCreateCustomeWallet=async()=>{
     resetState();
-    setLoading(true)
+    setLoading(true);
     try{
-    const wallet = await ethers.Wallet.createRandom(provider=provider);  
+    const wallet = await ethers.Wallet.createRandom(provider=API_URL);  
       const customeWalletInfo = {
         key:wallet.privateKey,
         address:wallet.address,
@@ -114,6 +115,7 @@ let provider = process.env.API_URL;
   }
   const handleWeb3authLogin = async () => {
     resetState();
+    setLoading(true);
 
     try {
    
@@ -124,7 +126,7 @@ let provider = process.env.API_URL;
     
       // console.log(state);
       let privateKey = state.privKey || "";
-      const walletInfo = new Wallet(privateKey,provider=process.env.API_URL);
+      const walletInfo = new Wallet(privateKey,provider=API_URL);
       setKey(privateKey || "no key");
       setWallet(walletInfo);
       console.log(walletInfo);
@@ -171,6 +173,7 @@ let provider = process.env.API_URL;
 
   return (
     <View style={styles.container}>
+      {loading&&<ActivityIndicator  color={'#fff'} />}
       <View style={styles.image1Stack}>
         <Image
           source={require("../assets/Imgaes/transparentLogo.png")}

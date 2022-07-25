@@ -1,76 +1,67 @@
 // srс/screens/HomeScreen.js
 
 import React,{useState,useEffect} from 'react';
-import { Wallet } from '@ethersproject/wallet';
-import {View,Image, Text, StyleSheet,ImageBackground} from 'react-native';
-import BLEfunction from "../../components/BLEfunction";
+import {View,Image, Text, StyleSheet,StatusBar} from 'react-native';
+// import BLEfunction from "../../components/BLEfunction";
+import BLEfunctionMVP from "../../components/BLEmvpFunction";
 import Maps from "../../components/Maps";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Interlynk from "../../artifacts/contracts/Interlynk.sol/Interlynk.json";
-// Import the required shims
-import "@ethersproject/shims";
+import {giveMeBalance,mintTheToken} from "../../components/SmartContractFunction";
+import { Dimensions } from 'react-native';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
-// Import the ethers library
-import { ethers } from 'ethers';
+const HomeScreen = () => {
+  const [storageData,setStorageData]=useState();
+  const [walletBalance, setWalletBallence] = useState(0.00);
 
-const HomeScreen = (props) => {
-  // const contractAddress ="0xd114b528639367869C8FeE741f820cc8aE060589";
-  
-
-// Specify your own API keys
-// Each is optional, and if you omit it the default
-// // API key for that service will be used.
-// const provider = new ethers.providers.AlchemyProvider("maticmum", process.env.api_key);
-
-// // const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-// // Signer
-// const signer = new ethers.Wallet("71cc99ec0243c0f2c1eded9b6a17759ddbb28816cb915441fa9b127c013e9e5b", provider);
-
-//   const readContract = new ethers.Contract(contractAddress,Interlynk.abi,provider);
-//   const writeContract = new ethers.Contract(contractAddress,Interlynk.abi,signer)
-//   const {key,logout,wallet}=props;
-//   const [storageData,setStorageData]=useState();
   const getData=async()=>{
-//     const value = await AsyncStorage.getItem('@storage_Key')
-//     const balance = await readContract.balanceOf("0xf27974264Aa92aEB05c73AC2b0703ed29A0FE97b");
-//     console.log("-------balance----")
-//     console.log(ethers.utils.formatEther(balance));
-//     // const valueee = ethers.utils.hexlify(100);
-//     // console.log(valueee)
-    
-//     console.log("--------minting function-------------");
-    
-//     const reward = await writeContract.functions.mint("0xf27974264Aa92aEB05c73AC2b0703ed29A0FE97b",ethers.utils.parseUnits('1000000', 18));
-//     console.log(reward);
-//     console.log("-------balance----")
-//     console.log(ethers.utils.formatEther(balance));
+    const value = await AsyncStorage.getItem('@storage_Key')
     if(value !== null) {
       let data = JSON.parse(value);
-      // console.log(data);
+      const tempBalance = await giveMeBalance(data.wallet.address);
+      // mintTheToken(data.wallet.address,500);
+      console.log("-----tempbalance -----");
+      console.log(tempBalance)
       setStorageData(data);
-      
+      setWalletBallence(tempBalance);
     }
 
   }
   useEffect(() => {
     if(!storageData){
       getData();
+      
+    }else{
+
+      setTimeout(async() => {
+      const tempBalance = await giveMeBalance(storageData.wallet.address);
+      console.log("-----tempbalance -----");
+      console.log(tempBalance);
+      setWalletBallence(tempBalance);
+      }, 10000);
+
     }
     
-    
-  }, [])
+  }, [storageData,walletBalance])
   
   
   return (
     <View style={styles.container}>
+      <StatusBar
+        animated={true}
+        backgroundColor="black"
+        barStyle={"dark"}
+      />
+      <View style={styles.map}>
     <Maps />
-    {/* <Image
-        source={require('../../assets/Imgaes/gradient.png')} 
-        style={{ width: '100%', height: 150,  flex: 1,
-        justifyContent: 'flex-end',
-        marginBottom: 36 }}
-    /> */}
-    {/* <BLEfunction /> */}
+    </View>
+    <View style={styles.balanceContainer}>
+      <Text style={styles.balanceText}>Your Balance</Text>
+      <Text style={styles.balance}>{walletBalance} INT</Text>
+    </View>
+    <BLEfunctionMVP />
+    
   </View>
   );
 };
@@ -82,6 +73,32 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginTop: Platform.OS == "ios" ? 20 : 0,
   },
+  map:{
+    width:windowWidth,
+    height:windowHeight-189
+  },
+  balanceContainer:{
+    backgroundColor: "rgba(0,0,0,1)",
+    borderWidth: 1,
+    borderColor: "#000000",
+    borderRadius: 27,
+    width: windowWidth,
+    height: windowHeight
+  },
+  balanceText:{
+    fontFamily: "roboto-regular",
+    color: "white",
+    fontSize: 25,
+    marginTop: windowHeight /20,
+    marginLeft: windowWidth /3
+  },
+  balance:{
+    fontFamily: "roboto-regular",
+    color: "white",
+    fontSize: 25,
+    marginTop: windowHeight /40,
+    marginLeft: windowWidth/2.5
+  }
  
 });
 export default HomeScreen;

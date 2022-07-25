@@ -21,6 +21,7 @@ const log = (msg, level = "log") => {
   const verbose = true;
   verbose && console[level](msg);
 };
+
 const delay = (milisec) => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -29,6 +30,7 @@ const delay = (milisec) => {
     }, milisec);
   });
 };
+
 export default class BLEfunction extends Component {
   constructor() {
     super();
@@ -376,6 +378,6 @@ return returnBlutoothData;
   }
 
   render() {
-    return <Text>{`scanned total ${this.state.data.length} devices`}</Text>;
+    return null;
   }
 }
