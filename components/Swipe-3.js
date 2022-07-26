@@ -23,6 +23,7 @@ import { ActivityIndicator } from "react-native";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { Icon,Overlay } from "@rneui/themed";
 
 const scheme = "web3authexposample"; // Or your desired app redirection scheme
 let provider = new ethers.providers.AlchemyProvider("maticmum", api_key);
@@ -70,7 +71,6 @@ const resolvedRedirectUrl =
   };
 
 
-  // console.log(API_URL);
   const handleCreateCustomeWallet=async()=>{
     resetState();
     setLoading(true);
@@ -118,7 +118,6 @@ const resolvedRedirectUrl =
   }
   const handleWeb3authLogin = async () => {
     resetState();
-    setLoading(true);
 
     try {
    
@@ -134,7 +133,7 @@ const resolvedRedirectUrl =
       setWallet(walletInfo);
       console.log(walletInfo);
       setIdToken(state.userInfo?.idToken);
-      value = {
+      let dataBaseValue = {
         key: key,
         wallet: walletInfo,
         userInfo: state,
@@ -155,7 +154,7 @@ const resolvedRedirectUrl =
       }).then((response) => {
         console.log("user created");
       });
-      const jsonValue = JSON.stringify(value);
+      const jsonValue = JSON.stringify(dataBaseValue);
       await AsyncStorage.setItem("@storage_Key", jsonValue);
       navigation.navigate("Home", {
         key: key,
@@ -193,7 +192,7 @@ const resolvedRedirectUrl =
         you.
       </Text>
       <Button
-          title={"Login with web3auth"}
+          title={<Icon name="google" type="font-awesome" size={25} color="white"/> }
           buttonStyle={{
             backgroundColor: "#000000",
             borderRadius: 5,
@@ -207,7 +206,7 @@ const resolvedRedirectUrl =
           onPress={handleWeb3authLogin}
         />
         <Button
-          title={"Login/Create wallet"}
+          title={"Login/Create Crypto wallet"}
           loading={loading}
           buttonStyle={{
             backgroundColor: "#000000",
@@ -217,7 +216,7 @@ const resolvedRedirectUrl =
             width: 200,
             marginHorizontal: windowWidth / 4,
             position: "absolute",
-            marginTop: windowHeight - 200,
+            marginTop: windowHeight - 170,
           }}
           onPress={handleCreateCustomeWallet}
         />

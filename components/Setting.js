@@ -1,11 +1,30 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { StyleSheet, View, Text,TouchableHighlight,Linking  } from "react-native";
 import { Icon } from "@rneui/themed";
-import LottieView from 'lottie-react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 
 
 
 function Setting(props) {
+  const [storageData,setStorageData]=useState();
+  const getData=async()=>{
+    const value = await AsyncStorage.getItem('@storage_Key')
+    if(value !== null) {
+      let data = JSON.parse(value);
+      setStorageData(data);
+    }
+
+  }
+  useEffect(() => {
+    if(!storageData){
+      getData();
+      
+    }
+    
+  }, [storageData])
+  
   return (
     <View style={styles.container}> 
       <View style={styles.iconRow}>
@@ -37,8 +56,12 @@ function Setting(props) {
         </View>
         </TouchableHighlight>
       </View>
-
-      <Text style={styles.builtwithlove}>Built with ❤️ in India</Text>
+        <Text style={styles.wallet}>Wallet Address:</Text>
+        <TouchableHighlight  onPress={()=>{Linking
+  .openURL(`https://mumbai.polygonscan.com/token/0xd114b528639367869c8fee741f820cc8ae060589?a=${storageData&& storageData.wallet.address}`)}} >
+        <Text style={styles.walletAddress}>{storageData&& storageData.wallet.address}</Text>
+        </TouchableHighlight>
+      <Text style={styles.builtwithlove}>Built with ❤️ in India for World 🌍</Text>
     </View>
   );
 }
@@ -55,6 +78,27 @@ const styles = StyleSheet.create({
   icon: {
     color: "rgba(255,255,255,1)",
     fontSize: 40
+  },
+  walletAddress:{
+
+    fontFamily: "inter-regular",
+    color: "rgba(255,255,255,1)",
+    height: 33,
+    width: wp('100%'),
+    fontSize: 14,
+    alignContent:"center",
+    marginTop: 6,
+  },
+  wallet:{
+
+    fontFamily: "inter-regular",
+    marginLeft:wp('7%'),
+    color: "rgba(255,255,255,1)",
+    height: 33,
+    width: wp('90%'),
+    fontSize: 25,
+
+    marginTop: 6
   },
   back: {
     fontFamily: "inter-regular",
@@ -116,7 +160,7 @@ const styles = StyleSheet.create({
     height: 63,
     width: 255,
     fontSize: 25,
-    marginTop: 400,
+    marginTop: hp('5%'),
     marginLeft: 74,
     fontWeight:"bold"
   }

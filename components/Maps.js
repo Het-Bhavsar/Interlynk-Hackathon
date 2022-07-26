@@ -210,7 +210,7 @@ export default class Maps extends Component {
               >
                 <Image
                   source={require("../assets/interlynk-popup.gif")}
-                  style={{ height: 55, width: 55 }}
+                  style={{ height: 65, width: 65 }}
                 />
               </Marker>
             ) : null}
@@ -223,7 +223,7 @@ export default class Maps extends Component {
               >
                 <Image
                   source={require("../assets/interlynk-popup.gif")}
-                  style={{ height: 55, width: 55 }}
+                  style={{ height: 65, width: 65 }}
                 />
               </Marker>
             ) : null} 
@@ -236,7 +236,7 @@ export default class Maps extends Component {
               >
                 <Image
                   source={require("../assets/interlynk-popup.gif")}
-                  style={{ height: 55, width: 55 }}
+                  style={{ height: 65, width: 65 }}
                 />
               </Marker>
             ) : null}
@@ -249,7 +249,7 @@ export default class Maps extends Component {
               >
                 <Image
                   source={require("../assets/interlynk-popup.gif")}
-                  style={{ height: 55, width: 55 }}
+                  style={{ height: 65, width: 65 }}
                 />
               </Marker>
             ) : null}
@@ -262,7 +262,7 @@ export default class Maps extends Component {
               >
                 <Image
                   source={require("../assets/interlynk-popup.gif")}
-                  style={{ height: 55, width: 55 }}
+                  style={{ height: 65, width: 65 }}
                 />
               </Marker>
             ) : null}
@@ -564,7 +564,7 @@ const styles = StyleSheet.create({
     top: 15,
     bottom: 0,
     left: 15,
-    backgroundColor: "rgba(255, 255, 255, 0)",
+    backgroundColor: "rgba(265, 265, 265, 0)",
   },
   container: {
     flex: 1,

@@ -104,6 +104,16 @@ export default class BLEfunctionMVP extends Component {
   componentDidMount() {
     // monitors blutooth state, and gives promote on off state.
     console.log("hello from ble functions")
+    if (this.state.bluetoothState === "PoweredOff") {
+      Alert.alert("Bluettoth is off", "Please turn on Bluetooth", [
+        {
+          text: "Enable",
+          onPress: () => {
+            this.enableBluettoth();
+          },
+        },
+      ]);
+    }
     this.onStateChangeListener = BluetoothManager.onStateChange((state) => {
       this.setState({ bluetoothState: state });
       if (state === "PoweredOff") {
