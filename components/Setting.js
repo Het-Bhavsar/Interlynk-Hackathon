@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from "react";
-import { StyleSheet, View, Text,TouchableHighlight,Linking  } from "react-native";
+import { StyleSheet, View, Text,TouchableHighlight,Linking,Image  } from "react-native";
 import { Icon } from "@rneui/themed";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -62,6 +62,8 @@ function Setting(props) {
         <Text style={styles.walletAddress}>{storageData&& storageData.wallet.address}</Text>
         </TouchableHighlight>
       <Text style={styles.builtwithlove}>Built with ❤️ in India for World 🌍</Text>
+      <Text style={styles.polygon}>Built on Polygon <Image   source={require("../assets/Imgaes/polygon-matic-logo-image.png")}
+                  style={{ height: 5, width: 45 }}/></Text>
     </View>
   );
 }
@@ -160,7 +162,17 @@ const styles = StyleSheet.create({
     height: 63,
     width: 255,
     fontSize: 25,
-    marginTop: hp('5%'),
+    marginTop: hp('20%'),
+    marginLeft: 74,
+    fontWeight:"bold"
+  },polygon:{
+
+    fontFamily: "roboto-regular",
+    color: "rgba(255,255,255,1)",
+    height: 63,
+    width: 255,
+    fontSize: 25,
+    marginTop: hp('7%'),
     marginLeft: 74,
     fontWeight:"bold"
   }

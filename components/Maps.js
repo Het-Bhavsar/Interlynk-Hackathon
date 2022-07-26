@@ -17,6 +17,7 @@ import { Icon,Overlay } from "@rneui/themed";
 import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 //Make sure that there is only one instance of BleManager globally, and the BleModule class holds Bluetooth connection information
 const delay = (milisec) => {
@@ -281,7 +282,7 @@ export default class Maps extends Component {
           <Icon name="gear" type="font-awesome" size={25} color="black" />
         </TouchableOpacity>
         <View style={styles.scannedDevicesContainer}>
-        <Text style={styles.scannedDevices}>Scanned {this.props.scannedDevices} devices</Text>
+        <Text style={styles.scannedDevices}>Connected {this.props.scannedDevices} Smart devices</Text>
         </View> 
         <View style={styles.balanceContainer}>
           <Text style={styles.balanceText}>Your Balance</Text>
@@ -541,7 +542,7 @@ const mapStyle = [
 const styles = StyleSheet.create({
   scannedDevicesContainer:{
     marginTop: windowHeight -300,
-    width: windowWidth-45,
+    width: wp('90%'),
     height: windowHeight / 10,
     position: "absolute",
     backgroundColor: "rgba(230,230,230,0.5)",
@@ -555,7 +556,7 @@ const styles = StyleSheet.create({
 
     fontFamily: "roboto-regular",
     fontSize: 20,
-    marginLeft:windowWidth/6,
+    marginLeft:wp('10%'),
     marginTop:windowHeight/40,
     color:"black"
   },
