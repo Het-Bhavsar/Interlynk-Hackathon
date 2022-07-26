@@ -15,6 +15,8 @@ import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import { BleManager } from "react-native-ble-plx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {mintTheToken} from "../components/SmartContractFunction";
+import Maps from "../components/Maps";
+
 const BluetoothManager = new BleManager();
 const log = (msg, level = "log") => {
   const verbose = true;
@@ -22,7 +24,7 @@ const log = (msg, level = "log") => {
 };
 
 export default class BLEfunctionMVP extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       scaning: false,
@@ -132,6 +134,9 @@ export default class BLEfunctionMVP extends Component {
     BluetoothManager.destroy();
   }
   render() {
-    return null;
+    return (
+    <Maps navigation={this.props.navigation} walletBalance={this.props.walletBalance} scannedDevices={this.state.data &&this.state.data.length}/>
+
+    );
   }
 }

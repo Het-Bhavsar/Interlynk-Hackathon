@@ -4,6 +4,8 @@ import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 function Swipe1(props) {
 // console.log("windowHeight",windowHeight);
 // console.log("windowWidth",windowWidth);
@@ -45,67 +47,66 @@ const styles = StyleSheet.create({
     },
     interlynkLogo: {
       position: "absolute",
-      top: windowHeight/7,
-      left: windowWidth/7,
-      height: windowHeight/3.5,
-      width: windowWidth/1.41
+      top: hp('10%'),
+      left: wp('9%'),
+      height: hp('30%'),
+      width: wp('80%')
     },
     brainLogo: {
       top: 0,
-      left: windowWidth - 250,
-      width: windowWidth-200,
-      height: windowHeight-50,
+      left: wp('25%'),
+      width: wp('50%'),
+      height: hp('90%'),
       position: "absolute"
     },
     imageStack: {
-      width: windowWidth-15,
-      height: windowHeight/1.5,
-      marginTop: 584-windowHeight,
-      marginLeft: windowWidth/35
+      width:  wp('50%'),
+      height: hp('70%'),
+      marginTop: hp('0.1%')-150,
     },
     welcome: {
       fontFamily: "roboto-regular",
       color: "#121212",
-      fontSize: 35,
-      marginTop: windowHeight /150,
-      marginLeft: windowWidth /4
+      fontSize: wp('10%'),
+      marginTop: hp('0.1%')-50,
+      marginLeft: wp('15%')
     },
     rect: {
       top: 0,
-      width: 333,
-      height: 258,
+      width: wp('90%'),
+      height: hp('50%'),
       position: "absolute",
       backgroundColor: "rgba(0,0,0,1)",
       borderWidth: 1,
       borderColor: "#000000",
       borderRadius: 22,
-      left: 0
     },
     weDoNotTrackData: {
       fontFamily: "roboto-regular",
       color: "rgba(255,252,252,1)",
-      height: 26,
-      width: 270,
-      fontSize: 20,
+      height: hp('5%'),
+      width: wp('50%'),
+      fontSize: wp('5%'),
       textAlign: "left",
-      marginTop: 41,
-      marginLeft: 56
+      marginTop: hp('5%'),
+      marginLeft: wp('15%')
     },
     we2: {
       fontFamily: "roboto-regular",
       color: "rgba(255,252,252,1)",
-      height: 26,
-      width: 270,
-      fontSize: 20,
+      height: hp('50%'),
+      width: wp('60%'),
+      fontSize: wp('5%'),
       textAlign: "left",
-      marginTop: 14,
-      marginLeft: 56
+      marginTop: hp('0%'),
+      marginLeft: wp('15%')
+      
     },
     rect2: {
-      top: 139,
-      left: 255,
-      width: 106,
-      height: 47,
+      top: hp('20%'),
+      left: wp('70%'),
+      width: wp('70%'),
+      height: hp('5%'),
       position: "absolute",
       backgroundColor: "white",
       borderRadius: 11
@@ -116,29 +117,24 @@ const styles = StyleSheet.create({
       position: "absolute",
       fontFamily: "roboto-regular",
       color: "#121212",
-      height: 35,
-      width: 67,
+      height: hp('5%'),
+      width: wp('20%'),
       fontSize: 20
     },
-    image5: {
-      position: "absolute",
-      top: 6,
-      left: 49,
-      height: 22,
-      width: 36
-    },
+    
     nextStack: {
-      width: 85,
-      height: 35,
-      marginTop: 7,
-      marginLeft: 18,
+      width:wp('1%'),
+      height: hp('1%'),
+      marginTop: hp('0.5%'),
+      marginLeft: wp('5%'),
       backgroundColor:"white"
     },
     rectStack: {
-      width: 361,
-      height: 258,
-      marginTop: 41,
-      marginLeft: 14
+      // width: 390,
+      width: wp('1%')+370,
+      height: hp('3%'),
+      marginTop: hp('3%'),
+      marginLeft: wp('5%')
     }
   });
   

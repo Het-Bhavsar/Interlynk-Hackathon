@@ -7,39 +7,81 @@ import {
   Text,
   PermissionsAndroid,
   TouchableOpacity,
-  Animated
+  Animated,
+  Image,
+  Animation,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
-import { Icon } from "@rneui/themed";
-import { Dimensions } from 'react-native';
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+import { Icon,Overlay } from "@rneui/themed";
+import { Dimensions } from "react-native";
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 //Make sure that there is only one instance of BleManager globally, and the BleModule class holds Bluetooth connection information
+const delay = (milisec) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log(`watiting for ${milisec} from delay function`);
+      resolve("");
+    }, milisec);
+  });
+};
 
 
 export default class Maps extends Component {
-  
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       liveLocation: {
         latitude: -1,
         longitude: -1,
       },
-      
+      marker1: false,
+      marker2: false,
+      marker3: false,
+      marker4: false,
+      marker5: false,
       gotLocation: false,
     };
   }
   componentDidMount() {
     this.getUserLocation();
     this.animation = new Animated.Value(0);
-  }
+    console.log(this.props.scannedDevices)
+   
+    setInterval(() => {
+      if(this.props.scannedDevices !=0){
+        console.log("looping function is starting");
+        this.loopingMarkerFunction()
 
-  
+      }else{
+        this.setState({
+          marker1: false,
+        marker2: false,
+        marker3: false,
+        marker4: false,
+        marker5: false,
+        })  
+      }
+    }, 5000);
+      
+    
+  }
+  async loopingMarkerFunction() {
+    this.setState({ marker1: true });
+    await delay(5000);
+    this.setState({ marker2: true });
+    await delay(5000);
+    this.setState({ marker3: true });
+    await delay(5000);
+    this.setState({ marker4: true });
+    await delay(5000);
+    this.setState({ marker5: true });
+    await delay(5000);
+  }
   getBluttothConnectPermission = async () => {
-    console.log("getBluttothConnectPermission")
+    console.log("getBluttothConnectPermission");
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADVERTISE
     );
@@ -136,8 +178,9 @@ export default class Maps extends Component {
   render() {
     return (
       <View style={styles.container}>
-        
-        <View >
+<View
+         pointerEvents="none"
+        >
           <MapView
             ref={(ref) => (this.map = ref)}
             style={styles.map}
@@ -156,286 +199,372 @@ export default class Maps extends Component {
             showsUserLocation
             loadingEnabled
             userLocationAnnotationTitle="You"
-          >
-            <Marker  coordinate={{latitude:this.state.liveLocation.latitude +1,longitude:this.state.liveLocation.longitude+1}}>
-        {/* <Animated.View style={[styles.markerWrap]}>
-          <Animated.View style={[styles.ring]} />
-          <View style={styles.marker} />
-        </Animated.View> */}
-      </Marker>
-          </MapView>
+          > 
+
+            {this.state.marker1 ? (
+              <Marker
+                coordinate={{
+                  latitude: this.state.liveLocation.latitude + 0.001,
+                  longitude: this.state.liveLocation.longitude + 0.002,
+                }}
+              >
+                <Image
+                  source={require("../assets/interlynk-popup.gif")}
+                  style={{ height: 55, width: 55 }}
+                />
+              </Marker>
+            ) : null}
+{this.state.marker2 ? (
+              <Marker
+              coordinate={{
+                latitude: this.state.liveLocation.latitude - 0.002,
+                longitude: this.state.liveLocation.longitude - 0.003,
+              }}
+              >
+                <Image
+                  source={require("../assets/interlynk-popup.gif")}
+                  style={{ height: 55, width: 55 }}
+                />
+              </Marker>
+            ) : null} 
+ {this.state.marker3 ? (
+              <Marker
+              coordinate={{
+                latitude: this.state.liveLocation.latitude + 0.003,
+                longitude: this.state.liveLocation.longitude + 0.001,
+              }}
+              >
+                <Image
+                  source={require("../assets/interlynk-popup.gif")}
+                  style={{ height: 55, width: 55 }}
+                />
+              </Marker>
+            ) : null}
+{this.state.marker4 ? (
+              <Marker
+                coordinate={{
+                  latitude: this.state.liveLocation.latitude + 0.004,
+                  longitude: this.state.liveLocation.longitude + 0.002,
+                }}
+              >
+                <Image
+                  source={require("../assets/interlynk-popup.gif")}
+                  style={{ height: 55, width: 55 }}
+                />
+              </Marker>
+            ) : null}
+{this.state.marker5 ? (
+              <Marker
+                coordinate={{
+                  latitude: this.state.liveLocation.latitude + 0.001,
+                  longitude: this.state.liveLocation.longitude + 0.003,
+                }}
+              >
+                <Image
+                  source={require("../assets/interlynk-popup.gif")}
+                  style={{ height: 55, width: 55 }}
+                />
+              </Marker>
+            ) : null}
+
+          
             
-            <TouchableOpacity style={styles.overlay} onPress={()=>{this.props.navigation.navigate("Setting")}} >
-        
-        <Icon name="gear" type="font-awesome"   size={25} color="black"  />
-      </TouchableOpacity>
-    
+           
+          </MapView>
         </View>
+        <TouchableOpacity
+          style={styles.overlay}
+          onPress={() => {
+            this.props.navigation.navigate("Setting");
+          }}
+        >
+          <Icon name="gear" type="font-awesome" size={25} color="black" />
+        </TouchableOpacity>
+        <View style={styles.scannedDevicesContainer}>
+        <Text style={styles.scannedDevices}>Scanned {this.props.scannedDevices} devices</Text>
+        </View> 
         <View style={styles.balanceContainer}>
-      <Text style={styles.balanceText}>Your Balance</Text>
-      <Text style={styles.balance}>{this.props.walletBalance} INT</Text>
-    </View>
+          <Text style={styles.balanceText}>Your Balance</Text>
+          <Text style={styles.balance}>{this.props.walletBalance} INT</Text>
+        </View>
       </View>
     );
   }
 }
-const mapStyle =[
+const mapStyle = [
   {
-    "elementType": "geometry",
-    "stylers": [
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#f5f5f5"
-      }
-    ]
+        color: "#f5f5f5",
+      },
+    ],
   },
   {
-    "elementType": "labels.icon",
-    "stylers": [
+    elementType: "labels.icon",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "elementType": "labels.text.fill",
-    "stylers": [
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#616161"
-      }
-    ]
+        color: "#616161",
+      },
+    ],
   },
   {
-    "elementType": "labels.text.stroke",
-    "stylers": [
+    elementType: "labels.text.stroke",
+    stylers: [
       {
-        "color": "#f5f5f5"
-      }
-    ]
+        color: "#f5f5f5",
+      },
+    ],
   },
   {
-    "featureType": "administrative.land_parcel",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "administrative.land_parcel",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#bdbdbd"
-      }
-    ]
+        color: "#bdbdbd",
+      },
+    ],
   },
   {
-    "featureType": "administrative.neighborhood",
-    "stylers": [
+    featureType: "administrative.neighborhood",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "poi",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "poi",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#eeeeee"
-      }
-    ]
+        color: "#eeeeee",
+      },
+    ],
   },
   {
-    "featureType": "poi",
-    "elementType": "labels.text",
-    "stylers": [
+    featureType: "poi",
+    elementType: "labels.text",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "poi",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "poi",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#757575"
-      }
-    ]
+        color: "#757575",
+      },
+    ],
   },
   {
-    "featureType": "poi.business",
-    "stylers": [
+    featureType: "poi.business",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "poi.park",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "poi.park",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#e5e5e5"
-      }
-    ]
+        color: "#e5e5e5",
+      },
+    ],
   },
   {
-    "featureType": "poi.park",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "poi.park",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#9e9e9e"
-      }
-    ]
+        color: "#9e9e9e",
+      },
+    ],
   },
   {
-    "featureType": "road",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "road",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#ffffff"
-      }
-    ]
+        color: "#ffffff",
+      },
+    ],
   },
   {
-    "featureType": "road",
-    "elementType": "labels",
-    "stylers": [
+    featureType: "road",
+    elementType: "labels",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "road",
-    "elementType": "labels.icon",
-    "stylers": [
+    featureType: "road",
+    elementType: "labels.icon",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "road.arterial",
-    "elementType": "labels",
-    "stylers": [
+    featureType: "road.arterial",
+    elementType: "labels",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "road.arterial",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "road.arterial",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#757575"
-      }
-    ]
+        color: "#757575",
+      },
+    ],
   },
   {
-    "featureType": "road.highway",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "road.highway",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#dadada"
-      }
-    ]
+        color: "#dadada",
+      },
+    ],
   },
   {
-    "featureType": "road.highway",
-    "elementType": "labels",
-    "stylers": [
+    featureType: "road.highway",
+    elementType: "labels",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "road.highway",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "road.highway",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#616161"
-      }
-    ]
+        color: "#616161",
+      },
+    ],
   },
   {
-    "featureType": "road.local",
-    "stylers": [
+    featureType: "road.local",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "road.local",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "road.local",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#9e9e9e"
-      }
-    ]
+        color: "#9e9e9e",
+      },
+    ],
   },
   {
-    "featureType": "transit",
-    "stylers": [
+    featureType: "transit",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "transit.line",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "transit.line",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#e5e5e5"
-      }
-    ]
+        color: "#e5e5e5",
+      },
+    ],
   },
   {
-    "featureType": "transit.station",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "transit.station",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#eeeeee"
-      }
-    ]
+        color: "#eeeeee",
+      },
+    ],
   },
   {
-    "featureType": "water",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "water",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#c9c9c9"
-      }
-    ]
+        color: "#c9c9c9",
+      },
+    ],
   },
   {
-    "featureType": "water",
-    "elementType": "labels.text",
-    "stylers": [
+    featureType: "water",
+    elementType: "labels.text",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "water",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "water",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#9e9e9e"
-      }
-    ]
-  }
-]
-
-
-
+        color: "#9e9e9e",
+      },
+    ],
+  },
+];
 
 const styles = StyleSheet.create({
+  scannedDevicesContainer:{
+    marginTop: windowHeight -300,
+    width: windowWidth-45,
+    height: windowHeight / 10,
+    position: "absolute",
+    backgroundColor: "rgba(230,230,230,0.5)",
+    borderWidth: 1,
+    borderColor: "rgba(158,177,198,1)",
+    borderRadius: 11,
+    marginLeft:windowWidth/15,
+    alignContent:"center"
+  },
+  scannedDevices:{
+
+    fontFamily: "roboto-regular",
+    fontSize: 20,
+    marginLeft:windowWidth/6,
+    marginTop:windowHeight/40,
+    color:"black"
+  },
   overlay: {
-    position: 'absolute',
-    top:15,
+    position: "absolute",
+    top: 15,
     bottom: 0,
-    left:15,
-    backgroundColor: 'rgba(255, 255, 255, 0)',
+    left: 15,
+    backgroundColor: "rgba(255, 255, 255, 0)",
   },
   container: {
     flex: 1,
@@ -443,42 +572,39 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS == "ios" ? 20 : 0,
   },
   icon: {
-    
-    position: 'absolute',
-   
-  
+    position: "absolute",
   },
   backgroundImage: {
     flex: 1,
     width: null,
     height: null,
-    backgroundColor: 'red',
+    backgroundColor: "red",
     opacity: 0.3,
   },
-  balanceContainer:{
-    position: 'absolute',
+  balanceContainer: {
+    position: "absolute",
 
     backgroundColor: "rgba(0,0,0,1)",
     borderWidth: 1,
     borderColor: "#000000",
     borderRadius: 25,
-    marginTop:windowHeight-220,
+    marginTop: windowHeight - 220,
     width: windowWidth,
-    height: windowHeight/3
+    height: windowHeight / 3,
   },
-  balanceText:{
+  balanceText: {
     fontFamily: "roboto-regular",
     color: "white",
     fontSize: 25,
-    marginTop: windowHeight /20,
-    marginLeft: windowWidth /3
+    marginTop: windowHeight / 20,
+    marginLeft: windowWidth / 3,
   },
-  balance:{
+  balance: {
     fontFamily: "roboto-regular",
     color: "white",
     fontSize: 25,
-    marginTop: windowHeight /40,
-    marginLeft: windowWidth/2.5
+    marginTop: windowHeight / 40,
+    marginLeft: windowWidth / 2.5,
   },
   item: {
     flexDirection: "column",

@@ -4,8 +4,6 @@ import React,{useState,useEffect} from 'react';
 import {View,Image, Text, StyleSheet,StatusBar} from 'react-native';
 // import BLEfunction from "../../components/BLEfunction";
 import BLEfunctionMVP from "../../components/BLEmvpFunction";
-import Maps from "../../components/Maps";
-import MapMVP from "../../components/MapMVP";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {giveMeBalance,mintTheToken} from "../../components/SmartContractFunction";
 import { Dimensions } from 'react-native';
@@ -55,11 +53,9 @@ const HomeScreen = (props) => {
         barStyle={"dark"}
       />
       <View style={styles.map}>
-    {/* <Maps navigation={props.navigation} walletBalance={walletBalance}/> */}
-    <MapMVP navigation={props.navigation} walletBalance={walletBalance}/>
+    <BLEfunctionMVP navigation={props.navigation} walletBalance={walletBalance}/>
     </View>
     
-    {/* <BLEfunctionMVP /> */}
     
   </View>
   );

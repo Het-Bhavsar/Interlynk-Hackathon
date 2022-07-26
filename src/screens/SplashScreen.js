@@ -17,7 +17,9 @@ const SplashScreen = (props) => {
     const value = await AsyncStorage.getItem('@storage_Key')
     if(value !== null) {
       // value previously stored
-      setAuthLoaded(true);
+      // setAuthLoaded(true);
+      setSwiperTest(true);
+
 
 
     }else{
