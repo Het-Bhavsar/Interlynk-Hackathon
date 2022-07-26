@@ -18,11 +18,12 @@ import "@ethersproject/shims";
 
 // Import the ethers library
 import { ethers } from 'ethers';
-import {API_URL} from '@env';
+import {api_key} from '@env';
 import { ActivityIndicator } from "react-native";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const scheme = "web3authexposample"; // Or your desired app redirection scheme
+let provider = new ethers.providers.AlchemyProvider("maticmum", api_key);
 const resolvedRedirectUrl =
   Constants.appOwnership == AppOwnership.Expo ||
   Constants.appOwnership == AppOwnership.Guest
@@ -35,11 +36,11 @@ const resolvedRedirectUrl =
 
       whiteLabel: {
         name: "Interlynk",
-        logoLight: "URL_TO_APP_LOGO_FOR_LIGHT_THEME",
-        logoDark: "URL_TO_APP_LOGO_FOR_DARK_THEME",
+        appLogo: "https://drive.google.com/file/d/1v76f_wKRAdSKGUMOYv_REpRaEFlaWj7f/view?usp=sharing",
+        logoDark: "https://drive.google.com/file/d/1v76f_wKRAdSKGUMOYv_REpRaEFlaWj7f/view?usp=sharing",
         defaultLanguage: "en", // or other language
         dark: true, // or false,
-        theme: {},
+        
       },
     });
     function Swipe3(props) {
@@ -72,7 +73,7 @@ const resolvedRedirectUrl =
     resetState();
     setLoading(true);
     try{
-    const wallet = await ethers.Wallet.createRandom(provider=API_URL);  
+    const wallet = await ethers.Wallet.createRandom(provider=provider);  
       const customeWalletInfo = {
         key:wallet.privateKey,
         address:wallet.address,
@@ -126,7 +127,7 @@ const resolvedRedirectUrl =
     
       // console.log(state);
       let privateKey = state.privKey || "";
-      const walletInfo = new Wallet(privateKey,provider=API_URL);
+      const walletInfo = new Wallet(privateKey,provider=provider);
       setKey(privateKey || "no key");
       setWallet(walletInfo);
       console.log(walletInfo);

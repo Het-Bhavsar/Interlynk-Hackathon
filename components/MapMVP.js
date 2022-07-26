@@ -7,7 +7,8 @@ import {
   Text,
   PermissionsAndroid,
   TouchableOpacity,
-  Animated
+  Animated,
+  Image
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
@@ -15,7 +16,7 @@ import { Icon } from "@rneui/themed";
 import { Dimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
+import CustomMarker from "../components/CustomeMarker"
 //Make sure that there is only one instance of BleManager globally, and the BleModule class holds Bluetooth connection information
 
 
@@ -137,7 +138,9 @@ export default class Maps extends Component {
     return (
       <View style={styles.container}>
         
-        <View >
+        <View
+        //  pointerEvents="none"
+        >
           <MapView
             ref={(ref) => (this.map = ref)}
             style={styles.map}
@@ -157,20 +160,33 @@ export default class Maps extends Component {
             loadingEnabled
             userLocationAnnotationTitle="You"
           >
-            <Marker  coordinate={{latitude:this.state.liveLocation.latitude +1,longitude:this.state.liveLocation.longitude+1}}>
-        {/* <Animated.View style={[styles.markerWrap]}>
-          <Animated.View style={[styles.ring]} />
-          <View style={styles.marker} />
-        </Animated.View> */}
+           {/*Make sure the Marker component is a child of MapView. Otherwise it won't render*/}
+      
+      {/* want this */}
+      <Marker coordinate={{latitude:this.state.liveLocation.latitude+0.001,longitude:this.state.liveLocation.longitude+0.002}} >
+      <CustomMarker/>
+      </Marker>
+      {/* want this */}
+      <Marker coordinate={{latitude:this.state.liveLocation.latitude-0.001,longitude:this.state.liveLocation.longitude-0.002}} >
+      <CustomMarker/>
+
+      </Marker>
+      <Marker coordinate={{latitude:this.state.liveLocation.latitude-0.002,longitude:this.state.liveLocation.longitude-0.003}} >
+      <CustomMarker/>
+
+      </Marker>
+      <Marker coordinate={{latitude:this.state.liveLocation.latitude+0.003,longitude:this.state.liveLocation.longitude+0.001}} >
+      <CustomMarker/>
+
       </Marker>
           </MapView>
             
+        </View>
             <TouchableOpacity style={styles.overlay} onPress={()=>{this.props.navigation.navigate("Setting")}} >
         
         <Icon name="gear" type="font-awesome"   size={25} color="black"  />
       </TouchableOpacity>
     
-        </View>
         <View style={styles.balanceContainer}>
       <Text style={styles.balanceText}>Your Balance</Text>
       <Text style={styles.balance}>{this.props.walletBalance} INT</Text>

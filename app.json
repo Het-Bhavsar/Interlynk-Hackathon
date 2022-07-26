@@ -4,14 +4,10 @@
     "slug": "interlynk",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Images/interlynk-logo.png",
     "userInterfaceStyle": "light",
     "scheme": "interlynk",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+ 
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -23,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/Images/interlynk-logo.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "interlynk.mvp"

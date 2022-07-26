@@ -5,6 +5,7 @@ import {View,Image, Text, StyleSheet,StatusBar} from 'react-native';
 // import BLEfunction from "../../components/BLEfunction";
 import BLEfunctionMVP from "../../components/BLEmvpFunction";
 import Maps from "../../components/Maps";
+import MapMVP from "../../components/MapMVP";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {giveMeBalance,mintTheToken} from "../../components/SmartContractFunction";
 import { Dimensions } from 'react-native';
@@ -54,12 +55,10 @@ const HomeScreen = (props) => {
         barStyle={"dark"}
       />
       <View style={styles.map}>
-    <Maps navigation={props.navigation}/>
+    {/* <Maps navigation={props.navigation} walletBalance={walletBalance}/> */}
+    <MapMVP navigation={props.navigation} walletBalance={walletBalance}/>
     </View>
-    <View style={styles.balanceContainer}>
-      <Text style={styles.balanceText}>Your Balance</Text>
-      <Text style={styles.balance}>{walletBalance} INT</Text>
-    </View>
+    
     {/* <BLEfunctionMVP /> */}
     
   </View>
@@ -77,28 +76,7 @@ const styles = StyleSheet.create({
     width:windowWidth,
     height:windowHeight-189
   },
-  balanceContainer:{
-    backgroundColor: "rgba(0,0,0,1)",
-    borderWidth: 1,
-    borderColor: "#000000",
-    borderRadius: 25,
-    width: windowWidth,
-    height: windowHeight
-  },
-  balanceText:{
-    fontFamily: "roboto-regular",
-    color: "white",
-    fontSize: 25,
-    marginTop: windowHeight /20,
-    marginLeft: windowWidth /3
-  },
-  balance:{
-    fontFamily: "roboto-regular",
-    color: "white",
-    fontSize: 25,
-    marginTop: windowHeight /40,
-    marginLeft: windowWidth/2.5
-  }
+  
  
 });
 export default HomeScreen;

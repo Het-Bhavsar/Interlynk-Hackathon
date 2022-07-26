@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text,TouchableHighlight,Linking  } from "react-native";
 import { Icon } from "@rneui/themed";
+import LottieView from 'lottie-react-native';
 
 
 
@@ -36,6 +37,8 @@ function Setting(props) {
         </View>
         </TouchableHighlight>
       </View>
+     <LottieView source={require('../assets/animation.json')} autoPlay loop />
+
       <Text style={styles.builtwithlove}>Built with ❤️ in India</Text>
     </View>
   );
