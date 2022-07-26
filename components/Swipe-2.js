@@ -4,10 +4,11 @@ import { Dimensions } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 function Swipe2(props) {
   return (
     <View style={styles.container}>
-      <View style={styles.image1Stack}>
         <Image
           source={require("../assets/Imgaes/transparentLogo.png")}
           resizeMode="contain"
@@ -18,7 +19,6 @@ function Swipe2(props) {
           resizeMode="contain"
           style={styles.gift}
         ></Image>
-      </View>
       <View style={styles.rect}>
         <Text style={styles.loremIpsum}>Start earning in Interlynk Token:</Text>
         <Text style={styles.loremIpsum2}>
@@ -32,37 +32,32 @@ function Swipe2(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display:'flex',
+    alignItems:'center',
+    flex: 1
   },
   intnerlynklogo: {
-    position: "absolute",
-    top: windowHeight/7,
-    left: windowWidth/7,
-    height: windowHeight/3.5,
-    width: windowWidth/1.41
+      height: hp('30%'),
+      width: wp('80%')
   },
   gift: {
-    position: "absolute",
-    top: 250,
-    left: 73,
     height: 200,
     width: 200
   },
   image1Stack: {
-    width: windowWidth-15,
-    height: windowHeight/1.5,
-    marginTop: 584-windowHeight,
-    marginLeft: windowWidth/35
+    // width: windowWidth-15,
+    // height: windowHeight/1.5,
+    // marginTop: 584-windowHeight,
+    // marginLeft: windowWidth/35
   },
   rect: {
-    width: 319,
-    height: 390,
+    width: wp('90%'),
+    height: hp('90%'),
     backgroundColor: "rgba(0,0,0,1)",
     borderWidth: 1,
     borderColor: "#000000",
     borderRadius: 20,
-    marginTop: 55,
-    marginLeft: 20
+    marginTop: hp('5%'),
   },
   loremIpsum: {
     fontFamily: "roboto-regular",

@@ -43,18 +43,19 @@ function Swipe1(props) {
 }
 const styles = StyleSheet.create({
     container: {
+      display:'flex',
+      alignItems:'center',
       flex: 1
     },
     interlynkLogo: {
       position: "absolute",
+      alignSelf:'center',
       top: hp('10%'),
-      left: wp('9%'),
       height: hp('30%'),
       width: wp('80%')
     },
     brainLogo: {
       top: 0,
-      left: wp('25%'),
       width: wp('50%'),
       height: hp('90%'),
       position: "absolute"
@@ -65,17 +66,17 @@ const styles = StyleSheet.create({
       marginTop: hp('0.1%')-150,
     },
     welcome: {
+      textAlign:'center',
+      alignSelf:'center',
       fontFamily: "roboto-regular",
       color: "#121212",
       fontSize: wp('10%'),
       marginTop: hp('0.1%')-50,
-      marginLeft: wp('15%')
     },
     rect: {
       top: 0,
       width: wp('90%'),
-      height: hp('50%'),
-      position: "absolute",
+      height: wp('100%'),
       backgroundColor: "rgba(0,0,0,1)",
       borderWidth: 1,
       borderColor: "#000000",
@@ -84,7 +85,6 @@ const styles = StyleSheet.create({
     weDoNotTrackData: {
       fontFamily: "roboto-regular",
       color: "rgba(255,252,252,1)",
-      height: hp('5%'),
       width: wp('50%'),
       fontSize: wp('5%'),
       textAlign: "left",
@@ -131,10 +131,8 @@ const styles = StyleSheet.create({
     },
     rectStack: {
       // width: 390,
-      width: wp('1%')+370,
-      height: hp('3%'),
+      width: wp('90%'),
       marginTop: hp('3%'),
-      marginLeft: wp('5%')
     }
   });
   

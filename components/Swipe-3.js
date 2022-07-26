@@ -22,6 +22,8 @@ import {api_key} from '@env';
 import { ActivityIndicator } from "react-native";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 const scheme = "web3authexposample"; // Or your desired app redirection scheme
 let provider = new ethers.providers.AlchemyProvider("maticmum", api_key);
 const resolvedRedirectUrl =
@@ -175,9 +177,9 @@ const resolvedRedirectUrl =
   return (
     <View style={styles.container}>
       {loading&&<ActivityIndicator  color={'#fff'} />}
-      <View style={styles.image1Stack}>
+      
         <Image
-          source={require("../assets/Imgaes/transparentLogo.png")}
+          source={require("../assets/Imgaes/interlynk-logo-crop.png")}
           resizeMode="contain"
           style={styles.interlynkLogo}
         ></Image>
@@ -186,7 +188,6 @@ const resolvedRedirectUrl =
           resizeMode="contain"
           style={styles.connecting}
         ></Image>
-      </View>
       <Text style={styles.text}>
         Interlynk uses bluetooth to {"\n"}locate and connect IoT devices around
         you.
@@ -226,21 +227,18 @@ const resolvedRedirectUrl =
 
 const styles = StyleSheet.create({
   container: {
+    display:'flex',
+    alignItems:'center',
     flex: 1
   },
   interlynkLogo: {
-    position: "absolute",
-    top: windowHeight/7,
-    left: windowWidth/7,
-    height: windowHeight/3.5,
-    width: windowWidth/1.41
+    height: hp('20%'),
+  
+    width: wp('80%'),
   },
   connecting: {
-    top: 0,
-    left: windowWidth - 250,
-    width: windowWidth-200,
-    height: windowHeight-50,
-    position: "absolute"
+    width: wp('50%'),
+    height: hp('30%'),
   },
   image1Stack: {
     width: windowWidth-15,
