@@ -1,0 +1,3 @@
+[submodule "Interlynk-backend"]
+	path = Interlynk-backend
+	url = https://github.com/Het-Bhavsar/Interlynk-backend.git
