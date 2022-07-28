@@ -76,6 +76,7 @@ export default class Maps extends Component {
       }
       let tempBalance = await giveMeBalance(this.props.walletAddress);
       // mintTheToken(data.wallet.address,500);
+      //final 
       console.log("-----tempbalance -----");
       console.log( parseFloat(tempBalance).toFixed(2));
       this.setState({ walletBalance: parseFloat(tempBalance).toFixed(2) });
