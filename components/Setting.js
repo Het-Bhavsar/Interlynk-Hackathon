@@ -56,14 +56,16 @@ function Setting(props) {
         </View>
         </TouchableHighlight>
       </View>
+      
+
         <Text style={styles.wallet}>Wallet Address:</Text>
         <TouchableHighlight  onPress={()=>{Linking
   .openURL(`https://mumbai.polygonscan.com/token/0xd114b528639367869c8fee741f820cc8ae060589?a=${storageData&& storageData.wallet.address}`)}} >
         <Text style={styles.walletAddress}>{storageData&& storageData.wallet.address}</Text>
         </TouchableHighlight>
-      <Text style={styles.builtwithlove}>Built with ❤️ in India for World 🌍</Text>
-      <Text style={styles.polygon}>Built on Polygon <Image   source={require("../assets/Imgaes/polygon-matic-logo-image.png")}
-                  style={{ height: 5, width: 45 }}/></Text>
+      
+      <Text style={styles.polygon}>Built on Polygon  <Image   source={require("../assets/Imgaes/polygon-matic-logo-image.png")}
+                  style={{ height: 45, width: 45 }}/></Text>
     </View>
   );
 }
@@ -89,7 +91,11 @@ const styles = StyleSheet.create({
     width: wp('100%'),
     fontSize: 14,
     alignContent:"center",
-    marginTop: 6,
+    marginLeft: hp('3%'),
+    marginTop:hp('1%'),
+    textDecorationLine: "underline",
+    textDecorationStyle: "solid",
+    textDecorationColor: "#000",
   },
   wallet:{
 
@@ -100,7 +106,7 @@ const styles = StyleSheet.create({
     width: wp('90%'),
     fontSize: 25,
 
-    marginTop: 6
+    marginTop: hp('7%')
   },
   back: {
     fontFamily: "inter-regular",
@@ -172,7 +178,7 @@ const styles = StyleSheet.create({
     height: 63,
     width: 255,
     fontSize: 25,
-    marginTop: hp('7%'),
+    marginTop: hp('35%'),
     marginLeft: 74,
     fontWeight:"bold"
   }

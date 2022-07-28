@@ -72,7 +72,7 @@ const resolvedRedirectUrl =
 
 
   const handleCreateCustomeWallet=async()=>{
-    resetState();
+    setLoading(true);
     setLoading(true);
     try{
     const wallet = await ethers.Wallet.createRandom(provider=provider);  
@@ -110,14 +110,15 @@ const resolvedRedirectUrl =
         key: key,
         wallet: customeWalletInfo,
         loginMethod: "web3auth"
-      });}catch (error) {
+      });
+    }catch (error) {
         console.error(error);
         setErrorMsg(String(error));
       }
         
   }
   const handleWeb3authLogin = async () => {
-    resetState();
+    
 
     try {
    
@@ -188,7 +189,7 @@ const resolvedRedirectUrl =
           style={styles.connecting}
         ></Image>
       <Text style={styles.text}>
-        Interlynk uses bluetooth to {"\n"}locate and connect IoT devices around
+        Interlynk uses BLE to {"\n"}locate and connect IoT devices around
         you.
       </Text>
       <Button

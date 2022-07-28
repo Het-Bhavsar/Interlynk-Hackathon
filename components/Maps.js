@@ -13,11 +13,15 @@ import {
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Geolocation from "react-native-geolocation-service";
-import { Icon,Overlay } from "@rneui/themed";
+import { Icon, Overlay } from "@rneui/themed";
 import { Dimensions } from "react-native";
+import { giveMeBalance } from "./SmartContractFunction";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 //Make sure that there is only one instance of BleManager globally, and the BleModule class holds Bluetooth connection information
 const delay = (milisec) => {
@@ -29,11 +33,17 @@ const delay = (milisec) => {
   });
 };
 
-
+/*
+   const tempBalance = await giveMeBalance(data.wallet.address);
+      // mintTheToken(data.wallet.address,500);
+      console.log("-----tempbalance -----");
+      console.log(tempBalance)
+*/
 export default class Maps extends Component {
   constructor(props) {
     super();
     this.state = {
+      walletBalance: "0.00",
       liveLocation: {
         latitude: -1,
         longitude: -1,
@@ -49,25 +59,27 @@ export default class Maps extends Component {
   componentDidMount() {
     this.getUserLocation();
     this.animation = new Animated.Value(0);
-    console.log(this.props.scannedDevices)
-   
-    setInterval(() => {
-      if(this.props.scannedDevices !=0){
-        console.log("looping function is starting");
-        this.loopingMarkerFunction()
+    console.log(this.props.scannedDevices);
 
-      }else{
+    setInterval(async () => {
+      if (this.props.scannedDevices != 0) {
+        console.log("looping function is starting");
+        this.loopingMarkerFunction();
+      } else {
         this.setState({
           marker1: false,
-        marker2: false,
-        marker3: false,
-        marker4: false,
-        marker5: false,
-        })  
+          marker2: false,
+          marker3: false,
+          marker4: false,
+          marker5: false,
+        });
       }
+      let tempBalance = await giveMeBalance(this.props.walletAddress);
+      // mintTheToken(data.wallet.address,500);
+      console.log("-----tempbalance -----");
+      console.log( parseFloat(tempBalance).toFixed(2));
+      this.setState({ walletBalance: parseFloat(tempBalance).toFixed(2) });
     }, 5000);
-      
-    
   }
   async loopingMarkerFunction() {
     this.setState({ marker1: true });
@@ -179,9 +191,7 @@ export default class Maps extends Component {
   render() {
     return (
       <View style={styles.container}>
-<View
-         pointerEvents="none"
-        >
+        <View pointerEvents="none">
           <MapView
             ref={(ref) => (this.map = ref)}
             style={styles.map}
@@ -200,8 +210,7 @@ export default class Maps extends Component {
             showsUserLocation
             loadingEnabled
             userLocationAnnotationTitle="You"
-          > 
-
+          >
             {this.state.marker1 ? (
               <Marker
                 coordinate={{
@@ -215,25 +224,12 @@ export default class Maps extends Component {
                 />
               </Marker>
             ) : null}
-{this.state.marker2 ? (
+            {this.state.marker2 ? (
               <Marker
-              coordinate={{
-                latitude: this.state.liveLocation.latitude - 0.002,
-                longitude: this.state.liveLocation.longitude - 0.003,
-              }}
-              >
-                <Image
-                  source={require("../assets/interlynk-popup.gif")}
-                  style={{ height: 65, width: 65 }}
-                />
-              </Marker>
-            ) : null} 
- {this.state.marker3 ? (
-              <Marker
-              coordinate={{
-                latitude: this.state.liveLocation.latitude + 0.003,
-                longitude: this.state.liveLocation.longitude + 0.001,
-              }}
+                coordinate={{
+                  latitude: this.state.liveLocation.latitude - 0.002,
+                  longitude: this.state.liveLocation.longitude - 0.003,
+                }}
               >
                 <Image
                   source={require("../assets/interlynk-popup.gif")}
@@ -241,7 +237,20 @@ export default class Maps extends Component {
                 />
               </Marker>
             ) : null}
-{this.state.marker4 ? (
+            {this.state.marker3 ? (
+              <Marker
+                coordinate={{
+                  latitude: this.state.liveLocation.latitude + 0.003,
+                  longitude: this.state.liveLocation.longitude + 0.001,
+                }}
+              >
+                <Image
+                  source={require("../assets/interlynk-popup.gif")}
+                  style={{ height: 65, width: 65 }}
+                />
+              </Marker>
+            ) : null}
+            {this.state.marker4 ? (
               <Marker
                 coordinate={{
                   latitude: this.state.liveLocation.latitude + 0.004,
@@ -254,7 +263,7 @@ export default class Maps extends Component {
                 />
               </Marker>
             ) : null}
-{this.state.marker5 ? (
+            {this.state.marker5 ? (
               <Marker
                 coordinate={{
                   latitude: this.state.liveLocation.latitude + 0.001,
@@ -267,10 +276,6 @@ export default class Maps extends Component {
                 />
               </Marker>
             ) : null}
-
-          
-            
-           
           </MapView>
         </View>
         <TouchableOpacity
@@ -282,11 +287,13 @@ export default class Maps extends Component {
           <Icon name="gear" type="font-awesome" size={25} color="black" />
         </TouchableOpacity>
         <View style={styles.scannedDevicesContainer}>
-        <Text style={styles.scannedDevices}>Connected {this.props.scannedDevices} Smart devices</Text>
-        </View> 
+          <Text style={styles.scannedDevices}>
+            Connected {this.props.scannedDevices} Smart devices
+          </Text>
+        </View>
         <View style={styles.balanceContainer}>
           <Text style={styles.balanceText}>Your Balance</Text>
-          <Text style={styles.balance}>{this.props.walletBalance} INT</Text>
+          <Text style={styles.balance}>{this.state.walletBalance} INT</Text>
         </View>
       </View>
     );
@@ -540,25 +547,24 @@ const mapStyle = [
 ];
 
 const styles = StyleSheet.create({
-  scannedDevicesContainer:{
-    marginTop: windowHeight -300,
-    width: wp('90%'),
+  scannedDevicesContainer: {
+    marginTop: windowHeight - 300,
+    width: wp("90%"),
     height: windowHeight / 10,
     position: "absolute",
-    backgroundColor: "rgba(230,230,230,0.5)",
+    backgroundColor: "rgba(0,0,0,0.2)",
     borderWidth: 1,
     borderColor: "rgba(158,177,198,1)",
-    borderRadius: 11,
-    marginLeft:windowWidth/15,
-    alignContent:"center"
+    borderRadius: 20,
+    marginLeft: windowWidth / 15,
+    alignContent: "center",
   },
-  scannedDevices:{
-
+  scannedDevices: {
     fontFamily: "roboto-regular",
     fontSize: 20,
-    marginLeft:wp('10%'),
-    marginTop:windowHeight/40,
-    color:"black"
+    marginLeft: wp("10%"),
+    marginTop: windowHeight / 40,
+    color: "white",
   },
   overlay: {
     position: "absolute",

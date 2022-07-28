@@ -14,7 +14,7 @@ import {
 import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import { BleManager } from "react-native-ble-plx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {mintTheToken} from "../components/SmartContractFunction";
+import {mintTheToken,giveMeBalance} from "../components/SmartContractFunction";
 import Maps from "../components/Maps";
 
 const BluetoothManager = new BleManager();
@@ -35,7 +35,7 @@ export default class BLEfunctionMVP extends Component {
     this.deviceMap = new Map();
     
     this.controls = {
-      scanningTime: 300000,
+      scanningTime: 7000,
     };
   }
   async stopScan() {
@@ -104,16 +104,6 @@ export default class BLEfunctionMVP extends Component {
   componentDidMount() {
     // monitors blutooth state, and gives promote on off state.
     console.log("hello from ble functions")
-    if (this.state.bluetoothState === "PoweredOff") {
-      Alert.alert("Bluettoth is off", "Please turn on Bluetooth", [
-        {
-          text: "Enable",
-          onPress: () => {
-            this.enableBluettoth();
-          },
-        },
-      ]);
-    }
     this.onStateChangeListener = BluetoothManager.onStateChange((state) => {
       this.setState({ bluetoothState: state });
       if (state === "PoweredOff") {
@@ -132,12 +122,15 @@ export default class BLEfunctionMVP extends Component {
     }, true /*=emitCurrentState*/);
     this.getData();
     setInterval(async() => {
-        let amount = this.state.data.length/10;
+        let amount = this.state.data.length/15;
         console.log(amount);
         await mintTheToken(this.state.walletAddress,amount);
         this.setState({data:[]});
         this.scan(); 
-    }, 360000);
+    }, 10000);
+    
+   
+
   }
   
   componentWillUnmount() {
@@ -145,7 +138,7 @@ export default class BLEfunctionMVP extends Component {
   }
   render() {
     return (
-    <Maps navigation={this.props.navigation} walletBalance={this.props.walletBalance} scannedDevices={this.state.data &&this.state.data.length}/>
+    <Maps navigation={this.props.navigation} walletAddress={this.state.walletAddress} scannedDevices={this.state.data &&this.state.data.length}/>
 
     );
   }

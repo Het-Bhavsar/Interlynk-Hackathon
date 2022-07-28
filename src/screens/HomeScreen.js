@@ -12,18 +12,13 @@ const windowHeight = Dimensions.get('window').height;
 
 const HomeScreen = (props) => {
   const [storageData,setStorageData]=useState();
-  const [walletBalance, setWalletBallence] = useState(0.00);
-
+  
   const getData=async()=>{
     const value = await AsyncStorage.getItem('@storage_Key')
     if(value !== null) {
       let data = JSON.parse(value);
-      const tempBalance = await giveMeBalance(data.wallet.address);
-      // mintTheToken(data.wallet.address,500);
-      console.log("-----tempbalance -----");
-      console.log(tempBalance)
+   
       setStorageData(data);
-      setWalletBallence(tempBalance);
     }
 
   }
@@ -31,18 +26,9 @@ const HomeScreen = (props) => {
     if(!storageData){
       getData();
       
-    }else{
-
-      setTimeout(async() => {
-      const tempBalance = await giveMeBalance(storageData.wallet.address);
-      console.log("-----tempbalance -----");
-      console.log(tempBalance);
-      setWalletBallence(tempBalance);
-      }, 10000);
-
     }
     
-  }, [storageData,walletBalance])
+  }, [storageData])
   
   
   return (
@@ -53,7 +39,7 @@ const HomeScreen = (props) => {
         barStyle={"dark"}
       />
       <View style={styles.map}>
-    <BLEfunctionMVP navigation={props.navigation} walletBalance={walletBalance}/>
+    <BLEfunctionMVP navigation={props.navigation} />
     </View>
     
     

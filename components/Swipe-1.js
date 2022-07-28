@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import { StyleSheet, View, Image, Text,BackHandler,Alert } from "react-native";
 import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 const windowWidth = Dimensions.get('window').width;
@@ -9,6 +9,21 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 function Swipe1(props) {
 // console.log("windowHeight",windowHeight);
 // console.log("windowWidth",windowWidth);
+const backAction = () => {
+  Alert.alert("Hold on!", "Are you sure you want to go back?", [
+    {
+      text: "Cancel",
+      onPress: () => null,
+      style: "cancel"
+    },
+    { text: "YES", onPress: () => BackHandler.exitApp() }
+  ]);
+  return true;
+};
+const backHandler = BackHandler.addEventListener(
+  "hardwareBackPress",
+  backAction
+);
   return (
     <View style={styles.container}>
       <View style={styles.imageStack}>
@@ -33,7 +48,7 @@ function Swipe1(props) {
         </View>
         <View style={styles.rect2}>
           <View style={styles.nextStack}>
-            <Text style={styles.next}>Next <Icon name="caretright" size={20} color="black" /></Text>
+            <Text style={styles.next}>Swipe <Icon name="caretright" size={15} color="black" /></Text>
             
           </View>
         </View>

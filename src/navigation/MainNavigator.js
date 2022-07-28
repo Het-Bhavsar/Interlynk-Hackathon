@@ -16,7 +16,7 @@ const MainNavigator = () => {
       <Stack.Navigator initialRouteName="Splash">
         <Stack.Screen
           name="Splash"
-          options={{ animationEnabled: false, header: () => null }}
+          options={{ animationEnabled: false, header: () => null ,gestureEnabled: false}}
           component={SplashScreen}
         />
         <Stack.Screen

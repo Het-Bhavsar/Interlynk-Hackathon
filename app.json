@@ -7,7 +7,9 @@
     "icon": "./assets/Images/interlynk-logo.png",
     "userInterfaceStyle": "light",
     "scheme": "interlynk",
- 
+ "splash": {
+  "image": "./assets/interlynk-logo.png"
+},
     "updates": {
       "fallbackToCacheTimeout": 0
     },
